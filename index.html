@@ -18,6 +18,7 @@
 
     <!--=============== CSS ===============-->
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/testimonials.css">
 
     <title> Responsive portfolio website Ansel </title>
 </head>
@@ -65,7 +66,7 @@
         <section class="home section" id="home">
             <div class="home__container container grid">
                 <div class="home__data">
-                    <span class="home__greeting">Hello, I'm</span>
+                    <span class="home__greeting">Hello, I\'m</span>
                     <h1 class="home__name">Aghar Sukarieh</h1>
                     <h3 class="home__education" id="typewriter">Flutter Developer</h3>
 
@@ -118,44 +119,31 @@
     </a>
 </div>
 
-                <a href="#about" class="home__scroll"><i class='bxr  bx-mouse home__scroll-icon'></i>
+                <a href="#about" class="home__scroll"><i class='bxr  bx-mouse home__scroll-icon\'></i>
                     <span class="home__scroll-name">Scroll Down</span> </a>
             </div>
 
         </section>
  <!--=============== TESTIMONIALS ===============-->
-        <section class="testimonial section">
-            <span class="section__subtitle">ما يقوله عملاؤنا</span>
-            <h2 class="section__title">الشهادات</h2>
-            
-            <div class="testimonial__container container">
-                <div class="testimonial__wrapper" id="testimonialWrapper">
-                    <!-- سيتم إدراج الكروت هنا ديناميكيًا بواسطة JavaScript -->
-                    <div class="testimonial__loading">
-                        <p>جاري تحميل الشهادات...</p>
-                    </div>
-                </div>
-                
-                <!-- أزرار التحكم في التمرير -->
-                <div class="testimonial__controls">
-                    <button class="testimonial__btn testimonial__btn--prev" id="prevBtn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                    <button class="testimonial__btn testimonial__btn--next" id="nextBtn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                </div>
-                
-                <!-- مؤشرات النقاط -->
-                <div class="testimonial__dots" id="testimonialDots">
-                    <!-- سيتم إدراج النقاط هنا ديناميكيًا -->
-                </div>
+         <section class="testimonials section" id="testimonials">
+        <div class="testimonials__container">
+            <div class="section__header">
+                <span class="section__subtitle">ما يقوله عملاؤنا</span>
+                <h2 class="section__title">شهادات العملاء</h2>
+                <p class="section__description">آراء وتجارب عملائنا الكرام معنا</p>
             </div>
-        </section>
+            
+                <div class="testimonials__track" id="testimonialsTrack">
+                    <!-- سيتم إدراج الكروت هنا ديناميكياً -->
+                </div>
+                
+              
+                
+                <div class="testimonials__indicators" id="testimonialsIndicators">
+                    <!-- سيتم إدراج المؤشرات هنا ديناميكياً -->
+                </div>
+        </div>
+    </section>
     </main>
     <!--=============== MIXITUP FILTER ===============-->
     <script src=""></script>
@@ -164,7 +152,9 @@
     <script src="assets/js/social_links_manager.js"></script>
 
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/testimonials.js"></script>
 </body>
 
 </html>
+
 

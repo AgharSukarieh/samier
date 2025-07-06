@@ -317,317 +317,259 @@ if (instagramLink) {
     document.head.appendChild(style);
 }
 // =============== TESTIMONIALS MANAGER ===============
-// =============== TESTIMONIALS MANAGER ===============
+/*=============== ENHANCED TESTIMONIALS SCRIPT ===============*/
+
+/*=============== ENHANCED TESTIMONIALS SCRIPT ===============*/
+
 class TestimonialsManager {
     constructor() {
+        this.testimonialsData = [
+            {
+                id: 1,
+                name: "أحمد محمد السعيد",
+                role: "مدير تقني",
+                message: "تجربة استثنائية مع فريق محترف جداً. تم تنفيذ المشروع بدقة عالية وفي الوقت المحدد. أنصح بالتعامل معهم بشدة لأي مشروع تقني.",
+                avatar: "assets/img/avatars/avatar_1.png",
+                signature: "assets/img/signatures/signature_1.png",
+                rating: 5,
+                date: "2024-01-01"
+            },
+            {
+                id: 2,
+                name: "فاطمة علي الزهراني",
+                role: "مديرة مشاريع",
+                message: "خدمة احترافية ومميزة تفوق التوقعات. الفريق متعاون ومتفهم لمتطلبات العمل. جودة عالية وتسليم في الوقت المناسب.",
+                avatar: "../assets/img/emojiAvatar14.png",
+                signature: "assets/img/signatures/signature_2.png",
+                rating: 5,
+                date: "2024-01-15"
+            },
+            {
+                id: 3,
+                name: "محمد حسن الأحمدي",
+                role: "رائد أعمال",
+                message: "تجربة رائعة ونتائج تفوق التوقعات بكثير. الفريق محترف ومتعاون ويهتم بأدق التفاصيل. سأتعامل معهم مرة أخرى بكل تأكيد.",
+                avatar: "assets/img/avatars/avatar_3.png",
+                signature: "assets/img/signatures/signature_3.png",
+                rating: 5,
+                date: "2024-02-01"
+            },
+            {
+                id: 4,
+                name: "سارة أحمد القحطاني",
+                role: "مصممة جرافيك",
+                message: "أفضل خدمة حصلت عليها على الإطلاق! الاهتمام بالتفاصيل والجودة العالية جعلتني أوصي بهم لجميع أصدقائي وزملائي في العمل.",
+                avatar: "assets/img/avatars/avatar_4.png",
+                signature: "assets/img/signatures/signature_4.png",
+             
+                date: "2024-02-15"
+            },
+            {
+                id: 5,
+                name: "عمر خالد المطيري",
+                role: "مطور تطبيقات",
+                message: "عمل متقن ومهني بكل معنى الكلمة. تم تنفيذ جميع المتطلبات بدقة عالية وفي الوقت المناسب. أشكركم على التعاون الرائع والنتائج المبهرة.",
+                avatar: "../assets/img/emojiAvatar14.png",
+                signature: "assets/img/signatures/signature_1.png",
+               
+                date: "2024-03-01"
+            },
+            {
+                id: 6,
+                name: "نورا عبدالله الشمري",
+                role: "مديرة تسويق",
+                message: "خدمة استثنائية وفريق عمل رائع. تم تجاوز توقعاتي بمراحل كثيرة. الجودة والاحترافية والالتزام بالمواعيد كان مثالياً.",
+                avatar: "assets/img/avatars/avatar_2.png",
+                signature: "assets/img/signatures/signature_2.png",
+               
+                date: "2024-03-15"
+            }
+        ];
+
+        this.testimonialsTrack = document.getElementById('testimonialsTrack');
+        this.prevBtn = document.getElementById('prevBtn');
+        this.nextBtn = document.getElementById('nextBtn');
+        this.indicatorsContainer = document.getElementById('testimonialsIndicators');
         this.currentIndex = 0;
-        this.testimonials = [];
-        this.autoScrollInterval = null;
-        this.autoScrollDelay = 5000; // 5 seconds
-        this.isAutoScrolling = true;
-        
-        // DOM Elements
-        this.wrapper = document.getElementById("testimonialWrapper");
-        this.dotsContainer = document.getElementById("testimonialDots");
-        this.prevBtn = document.getElementById("prevBtn");
-        this.nextBtn = document.getElementById("nextBtn");
-        
+        this.isHovered = false;
+
         this.init();
     }
-    
-    async init() {
-        try {
-            await this.loadTestimonials();
-            this.renderTestimonials();
-            this.createDots();
-            this.bindEvents();
-            this.startAutoScroll();
-        } catch (error) {
-            console.error("Error initializing testimonials:", error);
-            this.showError();
-        }
-    }
-    
-    // جلب البيانات من قاعدة البيانات (أو استخدام البيانات المضمنة)
-    async loadTestimonials() {
-        // استخدام البيانات المضمنة بدلاً من جلبها من API
-        this.testimonials = [
-                    {
-                        id: 1,
-                        qr_id: "QR001",
-                        sender_name: "أحمد محمد",
-                        message_text: "عمل رائع جداً، تم اتباع جميع جوانب المشروع خطوة بخطوة وبنتائج ممتازة. أنصح بالتعامل معهم بشدة.",
-                        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-                        signature: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMCAyMEM0MCAyMCA2MCAyMCA5MCAyMCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=",
-                        created_at: "2024-01-15"
-                    },
-                    {
-                        id: 2,
-                        qr_id: "QR002",
-                        sender_name: "فاطمة علي",
-                        message_text: "خدمة احترافية ومميزة، تم تسليم العمل في الوقت المحدد وبجودة عالية. شكراً لكم على الجهد المبذول.",
-                        image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-                        signature: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xNSAyNUM0NSAyNSA2NSAyNSA5NSAyNSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=",
-                        created_at: "2024-01-20"
-                    },
-                    {
-                        id: 3,
-                        qr_id: "QR003",
-                        sender_name: "محمد حسن",
-                        message_text: "تجربة رائعة ونتائج تفوق التوقعات. الفريق محترف ومتعاون ويهتم بأدق التفاصيل.",
-                        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-                        signature: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0yMCAyMEM1MCAyMCA3MCAyMCAxMDAgMjAiIHN0cm9rZT0iIzMzMyIgc3Ryb29rZS13aWR0aD0iMiIvPjwvc3ZnPg==",
-                        created_at: "2024-01-25"
-                    },
-                    {
-                        id: 4,
-                        qr_id: "QR004",
-                        sender_name: "سارة أحمد",
-                        message_text: "أفضل خدمة حصلت عليها، الاهتمام بالتفاصيل والجودة العالية جعلتني أوصي بهم لجميع أصدقائي.",
-                        image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-                        signature: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMiAyMkM0MiAyMiA2MiAyMiA5MiAyMiIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=",
-                        created_at: "2024-02-01"
-                    },
-                    {
-                        id: 5,
-                        qr_id: "QR005",
-                        sender_name: "عمر خالد",
-                        message_text: "عمل متقن ومهني، تم تنفيذ جميع المتطلبات بدقة عالية وفي الوقت المناسب. أشكركم على التعاون.",
-                        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-                        signature: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xOCAyNEM0OCAyNCA2OCAyNCA5OCAyNCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=",
-                        created_at: "2024-02-05"
-                    }
-                ];
-        // إذا كنت تريد جلب البيانات من API في المستقبل، يمكنك تفعيل الكود التالي:
-        /*
-        try {
-            const response = await fetch("YOUR_API_ENDPOINT_HERE"); // استبدل هذا برابط API الخاص بك
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            const data = await response.json();
-            this.testimonials = data;
-        } catch (error) {
-            console.error("Error fetching testimonials:", error);
-            throw error;
-        }
-        */
-    }
-    
-    renderTestimonials() {
-        // إزالة رسالة التحميل قبل عرض الكروت
-        this.wrapper.innerHTML = ""; 
 
-        if (this.testimonials.length === 0) {
-            this.wrapper.innerHTML = 
-                `<div class="testimonial__loading">
-                    <p>لا توجد شهادات متاحة حاليًا.</p>
-                </div>`;
-            return;
-        }
-        
-        const testimonialsHTML = this.testimonials.map(testimonial => 
-            this.createTestimonialCard(testimonial)
-        ).join("");
-        
-        this.wrapper.innerHTML = testimonialsHTML;
-        this.updateDisplay();
+    init() {
+        this.renderTestimonials();
+        this.renderIndicators();
+        this.setupEventListeners();
+        this.setupInfiniteScroll();
     }
-    
-    createTestimonialCard(testimonial) {
-        return `
-            <div class="testimonial__card" data-id="${testimonial.id}">
+
+    renderTestimonials() {
+        this.testimonialsTrack.innerHTML = '';
+        
+        // إنشاء ثلاث نسخ من البيانات لضمان التمرير اللانهائي السلس
+        const triplicatedData = [...this.testimonialsData, ...this.testimonialsData, ...this.testimonialsData];
+        
+        triplicatedData.forEach((testimonial, index) => {
+            const card = document.createElement('div');
+            card.classList.add('testimonial__card');
+            card.setAttribute('data-id', `${testimonial.id}-${Math.floor(index / this.testimonialsData.length)}`);
+
+            const stars = Array(testimonial.rating).fill('<i class=\'bx bxs-star testimonial__star\'></i>').join('');
+
+            card.innerHTML = `
                 <div class="testimonial__header">
-                    <img src="${testimonial.image}" alt="${testimonial.sender_name}" class="testimonial__img" 
-                         onerror="this.src=\'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JmLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIzMCIgZmlsbD0iI2Y1ZjVmNSIvPjxjaXJjbGUgY3g9IjMwIiBjeT0iMjUiIHI9IjgiIGZpbGw9IiNjY2MiLz48cGF0aCBkPSJNMTUgNDVjMC04IDctMTUgMTUtMTVzMTUgNyAxNSAxNSIgZmlsbD0iI2NjYyIvPjwvc3ZnPg==\'; this.style.display=\'none\';">
+                    <div class="testimonial__avatar">
+                        <img src="${testimonial.avatar}" alt="${testimonial.name}" class="testimonial__img">
+                    </div>
                     <div class="testimonial__info">
-                        <h3 class="testimonial__name">${testimonial.sender_name}</h3>
-                        <p class="testimonial__role">عميل</p>
+                        <h3 class="testimonial__name">${testimonial.name}</h3>
+                        <span class="testimonial__role">${testimonial.role}</span>
                     </div>
                 </div>
-                <p class="testimonial__description">${testimonial.message_text}</p>
-                ${testimonial.signature ? `
+                <div class="testimonial__content">
+                    <p class="testimonial__message">\"${testimonial.message}\"</p>
+                    <i class=\'bx bxs-quote-alt-right testimonial__quote\'></i>
+                </div>
+                <div class="testimonial__footer">
+                  
                     <div class="testimonial__signature">
-                        <img src="${testimonial.signature}" alt="توقيع ${testimonial.sender_name}" 
-                             onerror="this.style.display=\'none\';">
-                        <p class="testimonial__signature-text">التوقيع</p>
+                        <img src="${testimonial.signature}" alt="Signature" class="testimonial__signature-img">
                     </div>
-                ` : ""}
-            </div>
-        `;
-    }
-    
-    createDots() {
-        if (this.testimonials.length <= 1) return;
-        
-        const dotsHTML = this.testimonials.map((_, index) => 
-            `<span class="testimonial__dot ${index === 0 ? "active" : ""}" data-index="${index}"></span>`
-        ).join("");
-        
-        this.dotsContainer.innerHTML = dotsHTML;
-    }
-    
-    bindEvents() {
-        // أزرار التنقل
-        if (this.prevBtn) {
-            this.prevBtn.addEventListener("click", () => this.prevSlide());
-        }
-        
-        if (this.nextBtn) {
-            this.nextBtn.addEventListener("click", () => this.nextSlide());
-        }
-        
-        // النقاط
-        if (this.dotsContainer) {
-            this.dotsContainer.addEventListener("click", (e) => {
-                if (e.target.classList.contains("testimonial__dot")) {
-                    const index = parseInt(e.target.dataset.index);
-                    this.goToSlide(index);
-                }
-            });
-        }
-        
-        // إيقاف التمرير التلقائي عند التفاعل
-        this.wrapper.addEventListener("mouseenter", () => this.pauseAutoScroll());
-        this.wrapper.addEventListener("mouseleave", () => this.resumeAutoScroll());
-        
-        // التنقل بالكيبورد
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "ArrowLeft") this.nextSlide();
-            if (e.key === "ArrowRight") this.prevSlide();
+                </div>
+            `;
+            this.testimonialsTrack.appendChild(card);
         });
-        
-        // التنقل باللمس (للأجهزة المحمولة)
-        this.bindTouchEvents();
     }
-    
-    bindTouchEvents() {
-        let startX = 0;
-        let endX = 0;
+
+    renderIndicators() {
+        if (!this.indicatorsContainer) return;
         
-        this.wrapper.addEventListener("touchstart", (e) => {
-            startX = e.touches[0].clientX;
-        });
-        
-        this.wrapper.addEventListener("touchend", (e) => {
-            endX = e.changedTouches[0].clientX;
-            const diff = startX - endX;
-            
-            if (Math.abs(diff) > 50) { // الحد الأدنى للحركة
-                if (diff > 0) {
-                    this.nextSlide(); // تمرير لليسار
-                } else {
-                    this.prevSlide(); // تمرير لليمين
-                }
+        this.indicatorsContainer.innerHTML = '';
+        this.testimonialsData.forEach((_, index) => {
+            const indicator = document.createElement('div');
+            indicator.classList.add('testimonial__indicator');
+            if (index === this.currentIndex) {
+                indicator.classList.add('active');
             }
+            indicator.addEventListener('click', () => this.goToSlide(index));
+            this.indicatorsContainer.appendChild(indicator);
         });
     }
-    
-    updateDisplay() {
-        if (this.testimonials.length === 0) return;
-        
-        const cardWidth = 350 + 32; // عرض الكارت + المسافة
-        const offset = -this.currentIndex * cardWidth;
-        
-        this.wrapper.style.transform = `translateX(${offset}px)`;
-        
-        // تحديث النقاط
-        const dots = this.dotsContainer.querySelectorAll(".testimonial__dot");
-        dots.forEach((dot, index) => {
-            dot.classList.toggle("active", index === this.currentIndex);
+
+    setupEventListeners() {
+        // أزرار التحكم
+      
+
+        // إيقاف الحركة عند التأشير على المنطقة الكاملة
+        this.testimonialsTrack.addEventListener('mouseenter', () => {
+            this.isHovered = true;
+            this.pauseAnimation();
         });
-        
-        // تحديث أزرار التنقل
-        if (this.prevBtn) {
-            this.prevBtn.disabled = this.currentIndex === 0;
-        }
-        
-        if (this.nextBtn) {
-            this.nextBtn.disabled = this.currentIndex === this.testimonials.length - 1;
-        }
-    }
-    
-    nextSlide() {
-        if (this.currentIndex < this.testimonials.length - 1) {
-            this.currentIndex++;
-        } else {
-            this.currentIndex = 0; // العودة للبداية
-        }
-        this.updateDisplay();
-        this.resetAutoScroll();
-    }
-    
-    prevSlide() {
-        if (this.currentIndex > 0) {
-            this.currentIndex--;
-        } else {
-            this.currentIndex = this.testimonials.length - 1; // الذهاب للنهاية
-        }
-        this.updateDisplay();
-        this.resetAutoScroll();
-    }
-    
-    goToSlide(index) {
-        if (index >= 0 && index < this.testimonials.length) {
-            this.currentIndex = index;
-            this.updateDisplay();
-            this.resetAutoScroll();
-        }
-    }
-    
-    startAutoScroll() {
-        if (this.testimonials.length <= 1) return;
-        
-        this.autoScrollInterval = setInterval(() => {
-            if (this.isAutoScrolling) {
+
+        this.testimonialsTrack.addEventListener('mouseleave', () => {
+            this.isHovered = false;
+            this.resumeAnimation();
+        });
+
+        // إيقاف الحركة عند التأشير على الكروت الفردية
+        this.setupCardHoverEvents();
+
+        // التنقل بالكيبورد
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                this.prevSlide();
+            } else if (e.key === 'ArrowRight') {
                 this.nextSlide();
             }
-        }, this.autoScrollDelay);
+        });
+
+        // إعادة تشغيل الحركة عند تغيير حجم الشاشة
+        window.addEventListener('resize', () => {
+            this.setupInfiniteScroll();
+        });
     }
-    
-    pauseAutoScroll() {
-        this.isAutoScrolling = false;
+
+    setupCardHoverEvents() {
+        const cards = this.testimonialsTrack.querySelectorAll('.testimonial__card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                this.pauseAnimation();
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                if (!this.isHovered) {
+                    this.resumeAnimation();
+                }
+            });
+        });
     }
-    
-    resumeAutoScroll() {
-        this.isAutoScrolling = true;
+
+    setupInfiniteScroll() {
+        // تأكد من أن الحركة تعمل بشكل صحيح
+        this.resumeAnimation();
     }
-    
-    resetAutoScroll() {
-        if (this.autoScrollInterval) {
-            clearInterval(this.autoScrollInterval);
-        }
-        this.startAutoScroll();
+
+    pauseAnimation() {
+        this.testimonialsTrack.style.animationPlayState = 'paused';
     }
-    
-    showError() {
-        this.wrapper.innerHTML = `
-            <div class="testimonial__loading">
-                <p>حدث خطأ في تحميل الشهادات. يرجى المحاولة مرة أخرى.</p>
-                <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: var(--accent-color); color: white; border: none; border-radius: 0.5rem; cursor: pointer;">
-                    إعادة المحاولة
-                </button>
-            </div>
-        `;
+
+    resumeAnimation() {
+        this.testimonialsTrack.style.animationPlayState = 'running';
+    }
+
+    goToSlide(index) {
+        this.currentIndex = index;
+        this.updateIndicators();
+        
+        // إيقاف الحركة مؤقتاً للانتقال
+        this.pauseAnimation();
+        
+        // استئناف الحركة بعد ثانية واحدة
+        setTimeout(() => {
+            if (!this.isHovered) {
+                this.resumeAnimation();
+            }
+        }, 1000);
+    }
+
+    nextSlide() {
+        this.currentIndex = (this.currentIndex + 1) % this.testimonialsData.length;
+        this.updateIndicators();
+        this.pauseAnimation();
+        setTimeout(() => this.resumeAnimation(), 500);
+    }
+
+    prevSlide() {
+        this.currentIndex = (this.currentIndex - 1 + this.testimonialsData.length) % this.testimonialsData.length;
+        this.updateIndicators();
+        this.pauseAnimation();
+        setTimeout(() => this.resumeAnimation(), 500);
+    }
+
+    updateIndicators() {
+        if (!this.indicatorsContainer) return;
+        
+        this.indicatorsContainer.querySelectorAll('.testimonial__indicator').forEach((indicator, index) => {
+            if (index === this.currentIndex) {
+                indicator.classList.add('active');
+            } else {
+                indicator.classList.remove('active');
+            }
+        });
+    }
+
+    // Method to add new testimonial dynamically
+    addTestimonial(newTestimonial) {
+        this.testimonialsData.push(newTestimonial);
+        this.renderTestimonials();
+        this.renderIndicators();
+        this.setupCardHoverEvents();
     }
 }
 
-// =============== INITIALIZATION ===============
-document.addEventListener("DOMContentLoaded", () => {
-    new TestimonialsManager();
+// Initialize the testimonials manager when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.testimonialsManager = new TestimonialsManager();
 });
-
-// =============== UTILITY FUNCTIONS ===============
-// دالة لتحديث البيانات من الخادم
-async function refreshTestimonials() {
-    const manager = new TestimonialsManager();
-    await manager.init();
-}
-
-// دالة لإضافة شهادة جديدة (للاستخدام المستقبلي)
-function addTestimonial(testimonialData) {
-    // يمكن استخدام هذه الدالة لإضافة شهادة جديدة ديناميكيًا
-    console.log("Adding new testimonial:", testimonialData);
-}
 
 
