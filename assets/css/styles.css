@@ -257,6 +257,21 @@ img {
 .home__education {
   color: var(--text-color);
   margin-bottom: 2.5rem;
+  position: relative;
+  min-height: 1.5rem;
+}
+
+/* Typewriter effect */
+.home__education::after {
+  content: '|';
+  color: var(--first-color);
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 .home__name {
@@ -265,19 +280,110 @@ img {
 
 .home__img {
   width: 160px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
+.home__img:hover {
+  transform: scale(1.05);
+}
+
+/* Base styling for .home__handle */
 .home__handle {
   justify-self: center;
   width: 190px;
   height: 293px;
-  background: linear-gradient(180deg, hsla(var(--first-hue), var(--sat), var(--lig), 1), hsla(var(--first-hue), var(--sat), var(--lig), .2));
-  border-radius: 10rem 10rem  1rem 1rem;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   overflow: hidden;
+  transition: all 0.4s ease;
 }
+
+/* Default styling for PNG images */
+.home__handle:not(.square-container) {
+  background: linear-gradient(180deg, hsla(var(--first-hue), var(--sat), var(--lig), 1), hsla(var(--first-hue), var(--sat), var(--lig), .2));
+  border-radius: 10rem 10rem 1rem 1rem;
+}
+
+/* Square container styling for non-PNG images */
+.home__handle.square-container {
+  width: auto;
+  height: auto;
+  border-radius: 1.5rem;
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  align-items: center;
+  position: relative;
+  background: none; /* Remove gradient background for non-PNG */
+}
+
+/* Animation for square container */
+@keyframes popIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Optional: Image styling within containers */
+.home__handle img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.linkedin-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.linkedin-icon:hover {
+  transform: scale(1.1);
+}
+
+.home__handle.square-container img {
+  border-radius: 1rem;
+}
+
+/* Hover effects */
+.home__handle:hover {
+  transform: translateY(-5px);
+}
+
+.home__handle:hover img {
+  transform: scale(1.05);
+}
+
+
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.3) rotate(-10deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.home__handle.square-container .home__img {
+  width: 200px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
 .home__buttons{
   display: flex;
   justify-content: center;
@@ -335,6 +441,75 @@ img {
 
 }
 
+/*=============== IMAGE MODAL ===============*/
+.image-modal {
+  display: none;
+  position: fixed;
+  z-index: var(--z-modal);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  position: relative;
+  margin: 5% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  background: linear-gradient(135deg, 
+    hsla(var(--first-hue), var(--sat), var(--lig), 0.1), 
+    hsla(var(--first-hue), var(--sat), var(--lig), 0.05));
+  border-radius: 20px;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px hsla(var(--first-hue), var(--sat), var(--lig), 0.2);
+  backdrop-filter: blur(20px);
+  animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px) scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  color: var(--first-color);
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-modal:hover {
+  color: var(--first-color-alt);
+}
+
+.modal-image {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
 /*=============== BUTTONS ===============*/
  .buttons{
   display: inline-block;
@@ -355,83 +530,50 @@ img {
   border: 2px solid var(--first-color);
   color: var(--first-color);
 }
-/*=============== ABOUT ===============*/
-.about__container{
-  row-gap: 2.5rem;
+
+/*=============== RESPONSIVE ===============*/
+@media screen and (max-width: 576px) {
+  .home__handle.square-container {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .home__handle.square-container .home__img {
+    width: 150px;
+  }
+  
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+  }
 }
-.about__img{
-  width: 220px;
-  border-radius: 1.5rem;
-  justify-self: center;
+
+@media screen and (min-width: 968px) {
+  .home__handle.square-container {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .home__handle.square-container .home__img {
+    width: 250px;
+  }
 }
-.about__data{
-  text-align: center;
 
+
+
+.hello-everyone {
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  font-size: 1.2rem;
+  color: var(--title-color);
+  font-weight: var(--font-semibold);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
-.about__info{
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: .5rem;
-  margin-bottom:2rem ;
 
+.home__handle.square-container .hello-everyone {
+  opacity: 1;
 }
-.about__box{
-  background-color: var(--container-color);
-  border-radius:.75rem ;
-  padding: .75rem .5rem;
-}
-.about__icon{
-  font-size: 1.5rem;
-  color: var(--first-color);
-  margin-bottom: .5rem;
-}
-.about__title{
-  font-size: var(--small-font-size);
-}
-.about__subtitle{
-  font-size: var(--tiny-font-size);
-}
-.about__description{
-  margin-bottom: 2rem;
-}
-/*=============== SKILLS ===============*/
 
 
-/*=============== SERVICES ===============*/
-
-
-/* Services modal */
-
-
-/*Active modal*/
-
-
-/*=============== WORK ===============*/
-
-
-/* Active item work*/
-
-
-/*=============== TESTIMONIAL ===============*/
-
-
-/* Swiper class */
-
-
-/*=============== CONTACT ===============*/
-
-
-/*=============== FOOTER ===============*/
-
-
-/*=============== SCROLL BAR ===============*/
-
-
-/*=============== BREAKPOINTS ===============*/
-/* For small devices */
-
-
-/* For medium devices */
-
-
-/* For large devices */
