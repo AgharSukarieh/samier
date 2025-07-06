@@ -416,13 +416,13 @@ img {
   color: #fff;
 
 }
-.home__social::after{
+/* .home__social::after{
   content: '';
   width: 32px;
   height: 2px;
   background-color: var(--first-color);
   transform: rotate(90deg) translate(16px,3px);
-}
+} */
 .home__scroll{
   color: var(--first-color);
   right: -1.5rem;
@@ -458,6 +458,155 @@ img {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+/*=============== HOME ===============*/
+.home__social {
+  position: absolute;
+  left: 1rem;
+  bottom: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0;
+  animation: slideInLeft 0.8s ease forwards 1.4s;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px );
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* .home__social-line {
+  width: 2px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--first-color), transparent);
+  margin-bottom: 0.5rem;
+} */
+
+.home__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: var(--container-color);
+  border: 1px solid var(--border-color);
+  border-radius: 2rem;
+  color: var(--text-color);
+  font-size: 1.25rem;
+  transition: var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.home__social-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  transition: var(--transition-fast);
+  z-index: -1;
+}
+
+.home__social-link.linkedin::before {
+  background: #0077b5;
+}
+
+.home__social-link.github::before {
+  background: #333;
+}
+
+.home__social-link.facebook::before {
+  background: #1877f2;
+}
+
+.home__social-link.twitter::before {
+  background: #1da1f2;
+}
+
+.home__social-link:hover::before {
+  left: 0;
+}
+
+.home__social-link:hover {
+  color: white;
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: var(--shadow-medium);
+}
+
+.social-tooltip {
+  position: absolute;
+  left: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--container-color-alt);
+  color: var(--text-color);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+  font-size: var(--small-font-size);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--transition-fast);
+  z-index: var(--z-tooltip);
+}
+
+.social-tooltip::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right-color: var(--container-color-alt);
+}
+
+.home__social-link:hover .social-tooltip {
+  opacity: 1;
+}
+
+/* From animations.css */
+.home__social-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.home__social-link::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%) rotate(45deg);
+  transition: transform 0.6s ease;
+}
+
+.home__social-link:hover::after {
+  transform: translateX(100%) rotate(45deg);
+}
+
+.home__social-link i {
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.home__social-link:hover i {
+  transform: scale(1.2) rotate(360deg);
+}
+
+/* Additional CSS for Instagram from inline style */
+.home__social-link.instagram::before {
+    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
 }
 
 .modal-content {
@@ -577,3 +726,250 @@ img {
 }
 
 
+.testimonial__container {
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial__wrapper {
+  display: flex;
+  transition: transform 0.5s ease;
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.testimonial__card {
+  background-color: var(--container-color);
+  padding: 2rem 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 20px var(--shadow-color);
+  min-width: 350px;
+  max-width: 400px;
+  flex-shrink: 0;
+  position: relative;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.testimonial__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px var(--shadow-color);
+}
+
+.testimonial__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.testimonial__img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent-color);
+  flex-shrink: 0;
+}
+
+.testimonial__info {
+  flex: 1;
+}
+
+.testimonial__name {
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-medium);
+  color: var(--text-color);
+  margin-bottom: 0.25rem;
+}
+
+.testimonial__role {
+  font-size: var(--small-font-size);
+  color: var(--text-color-light);
+}
+
+.testimonial__description {
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.testimonial__description::before {
+  content: '"';
+  font-size: 3rem;
+  color: var(--accent-color);
+  position: absolute;
+  top: -1rem;
+  right: -0.5rem;
+  opacity: 0.3;
+}
+
+.testimonial__signature {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.testimonial__signature img {
+  max-width: 120px;
+  height: auto;
+  opacity: 0.8;
+}
+
+.testimonial__signature-text {
+  font-size: var(--small-font-size);
+  color: var(--text-color-light);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+/* =============== LOADING =============== */
+.testimonial__loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-color-light);
+  font-size: var(--normal-font-size);
+}
+
+/* =============== CONTROLS =============== */
+.testimonial__controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.testimonial__btn {
+  background-color: var(--container-color);
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--accent-color);
+}
+
+.testimonial__btn:hover {
+  background-color: var(--accent-color);
+  color: white;
+  transform: scale(1.1);
+}
+
+.testimonial__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =============== DOTS =============== */
+.testimonial__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.testimonial__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--border-color);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.testimonial__dot.active {
+  background-color: var(--accent-color);
+  transform: scale(1.2);
+}
+
+.testimonial__dot:hover {
+  background-color: var(--accent-color);
+  opacity: 0.7;
+}
+
+/* =============== RESPONSIVE =============== */
+@media screen and (max-width: 768px) {
+  .section__title {
+    font-size: 2rem;
+  }
+  
+  .testimonial__card {
+    min-width: 280px;
+    max-width: 320px;
+    padding: 1.5rem 1rem;
+  }
+  
+  .testimonial__wrapper {
+    gap: 1rem;
+  }
+  
+  .testimonial__img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .testimonial__btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .testimonial__card {
+    min-width: 250px;
+    max-width: 280px;
+  }
+  
+  .section__title {
+    font-size: 1.75rem;
+  }
+  
+  .testimonial__header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}
+
+/* =============== ANIMATIONS =============== */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.testimonial__card {
+  animation: slideIn 0.6s ease forwards;
+}
+
+/* =============== AUTO SCROLL INDICATOR =============== */
+.testimonial__container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background-color: var(--accent-color);
+  animation: progress 5s linear infinite;
+}
+
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
