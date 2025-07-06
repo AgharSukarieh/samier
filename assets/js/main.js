@@ -316,6 +316,166 @@ if (instagramLink) {
     `;
     document.head.appendChild(style);
 }
+
+/*=============== CV DROPDOWN FUNCTIONALITY ===============*/
+document.addEventListener('DOMContentLoaded', function() {
+    const cvDownloadBtn = document.getElementById('cvDownloadBtn');
+    const cvDropdown = document.getElementById('cvDropdown');
+    const cvOptions = document.querySelectorAll('.cv-option');
+
+    // فتح/إغلاق القائمة المنبثقة
+    cvDownloadBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // تبديل حالة القائمة
+        const isOpen = cvDropdown.classList.contains('show');
+        
+        if (isOpen) {
+            closeDropdown();
+        } else {
+            openDropdown();
+        }
+    });
+
+    // فتح القائمة المنبثقة
+    function openDropdown() {
+        cvDropdown.classList.add('show');
+        cvDownloadBtn.classList.add('active');
+        
+        // إضافة تأثير تدريجي للخيارات
+        cvOptions.forEach((option, index) => {
+            option.style.opacity = '0';
+            option.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                option.style.transition = 'all 0.3s ease';
+                option.style.opacity = '1';
+                option.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+    }
+
+    // إغلاق القائمة المنبثقة
+    function closeDropdown() {
+        cvDropdown.classList.remove('show');
+        cvDownloadBtn.classList.remove('active');
+        
+        // إعادة تعيين تأثيرات الخيارات
+        cvOptions.forEach(option => {
+            option.style.transition = '';
+            option.style.opacity = '';
+            option.style.transform = '';
+        });
+    }
+
+    // إغلاق القائمة عند النقر خارجها
+    document.addEventListener('click', function(e) {
+        if (!cvDownloadBtn.contains(e.target) && !cvDropdown.contains(e.target)) {
+            closeDropdown();
+        }
+    });
+
+    // إغلاق القائمة عند الضغط على Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeDropdown();
+        }
+    });
+
+    // التعامل مع النقر على خيارات التحميل
+    cvOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            // إضافة تأثير بصري عند النقر
+            this.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+
+            // إغلاق القائمة بعد التحميل
+            setTimeout(() => {
+                closeDropdown();
+            }, 300);
+
+            // إضافة رسالة تأكيد (اختيارية)
+            const fileName = this.getAttribute('download');
+            console.log(`تم بدء تحميل: ${fileName}`);
+            
+            // يمكن إضافة إشعار للمستخدم هنا
+            showDownloadNotification(fileName);
+        });
+    });
+
+    // عرض إشعار التحميل
+    function showDownloadNotification(fileName) {
+        // إنشاء عنصر الإشعار
+        const notification = document.createElement('div');
+        notification.className = 'download-notification';
+        notification.innerHTML = `
+            <i class='bx bx-check-circle'></i>
+            <span>تم بدء تحميل ${fileName}</span>
+        `;
+
+        // إضافة الإشعار للصفحة
+        document.body.appendChild(notification);
+
+        // إضافة الأنماط للإشعار
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--container-color);
+            color: var(--text-color);
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid hsla(var(--first-hue), var(--sat), var(--lig), 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            font-size: var(--small-font-size);
+            font-weight: var(--font-medium);
+        `;
+
+        // إظهار الإشعار
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+
+        // إخفاء الإشعار بعد 3 ثوان
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+
+    // تحسين إمكانية الوصول
+    cvDownloadBtn.setAttribute('aria-expanded', 'false');
+    cvDownloadBtn.setAttribute('aria-haspopup', 'true');
+
+    // تحديث aria-expanded عند فتح/إغلاق القائمة
+    const originalOpenDropdown = openDropdown;
+    const originalCloseDropdown = closeDropdown;
+
+    openDropdown = function() {
+        originalOpenDropdown();
+        cvDownloadBtn.setAttribute('aria-expanded', 'true');
+    };
+
+    closeDropdown = function() {
+        originalCloseDropdown();
+        cvDownloadBtn.setAttribute('aria-expanded', 'false');
+    };
+});
+
+
 // =============== TESTIMONIALS MANAGER ===============
 /*=============== ENHANCED TESTIMONIALS SCRIPT ===============*/
 

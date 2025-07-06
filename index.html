@@ -71,17 +71,32 @@
                     <h3 class="home__education" id="typewriter">Flutter Developer</h3>
 
                     <div class="home__buttons">
-                        <a download="" href="../uploads/images/perfil.png" class="button button--ghost">
-                            Download CV
-                        </a>
-                        <a href="#about" class="button">About me</a>
+                       <div class="cv-download-container">
+                            <button class="button button--ghost cv-download-btn" id="cvDownloadBtn">
+                                Download CV
+                                <i class='bx bx-chevron-down cv-arrow'></i>
+                            </button>
+                            <div class="cv-dropdown" id="cvDropdown">
+                                <div class="cv-dropdown-content">
+                                    <a href="assets/test.php" download="Aghar_Sukarieh_CV.docx" class="cv-option">
+                                        <i class='bx bxs-file-doc'></i>
+                                        <span>تحميل CV وورد</span>
+                                    </a>
+                                    <a href="uploads/cv/cv-pdf.pdf" download="Aghar_Sukarieh_CV.pdf" class="cv-option">
+                                        <i class='bx bxs-file-pdf'></i>
+                                        <span>تحميل CV PDF</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#about" class="button--book">About me</a>
                     </div>
                 </div>
 
                 <div class="home__handle" id="imageContainer">
                     <img src="assets/img/perfil.png" alt="" class="home__img" id="profileImage">
                 </div>
-                
+
                 <!-- Modal for non-PNG images -->
                 <div class="image-modal" id="imageModal">
                     <div class="modal-content">
@@ -90,60 +105,69 @@
                     </div>
                 </div>
 
-               <div class="home__social" role="complementary" aria-label="روابط التواصل الاجتماعي">
-    <div class="home__social-line" aria-hidden="true"></div>
-    
-    <a href="https://www.linkedin.com/in/your-username" target="_blank" rel="noopener noreferrer" class="home__social-link linkedin focus-visible will-change-transform" aria-label="زيارة ملفي الشخصي على LinkedIn">
-        <i class='bx bxl-linkedin' aria-hidden="true"></i>
-        <span class="social-tooltip">LinkedIn</span>
-    </a>
+                <div class="home__social" role="complementary" aria-label="روابط التواصل الاجتماعي">
+                    <div class="home__social-line" aria-hidden="true"></div>
 
-    <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="home__social-link github focus-visible will-change-transform" aria-label="زيارة ملفي الشخصي على GitHub">
-        <i class='bx bxl-github' aria-hidden="true"></i>
-        <span class="social-tooltip">GitHub</span>
-    </a>
-    
-    <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="home__social-link facebook focus-visible will-change-transform" aria-label="زيارة ملفي الشخصي على Facebook">
-        <i class='bx bxl-facebook' aria-hidden="true"></i>
-        <span class="social-tooltip">Facebook</span>
-    </a>
-    
-    <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="home__social-link twitter focus-visible will-change-transform" aria-label="زيارة ملفي الشخصي على Twitter">
-        <i class='bx bxl-twitter' aria-hidden="true"></i>
-        <span class="social-tooltip">Twitter</span>
-    </a>
+                    <a href="https://www.linkedin.com/in/your-username" target="_blank" rel="noopener noreferrer"
+                        class="home__social-link linkedin focus-visible will-change-transform"
+                        aria-label="زيارة ملفي الشخصي على LinkedIn">
+                        <i class='bx bxl-linkedin' aria-hidden="true"></i>
+                        <span class="social-tooltip">LinkedIn</span>
+                    </a>
 
-    <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="home__social-link instagram focus-visible will-change-transform" aria-label="زيارة ملفي الشخصي على Instagram">
-        <i class='bx bxl-instagram' aria-hidden="true"></i>
-        <span class="social-tooltip">Instagram</span>
-    </a>
-</div>
+                    <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer"
+                        class="home__social-link github focus-visible will-change-transform"
+                        aria-label="زيارة ملفي الشخصي على GitHub">
+                        <i class='bx bxl-github' aria-hidden="true"></i>
+                        <span class="social-tooltip">GitHub</span>
+                    </a>
 
-                <a href="#about" class="home__scroll"><i class='bxr  bx-mouse home__scroll-icon\'></i>
-                    <span class="home__scroll-name">Scroll Down</span> </a>
+                    <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer"
+                        class="home__social-link facebook focus-visible will-change-transform"
+                        aria-label="زيارة ملفي الشخصي على Facebook">
+                        <i class='bx bxl-facebook' aria-hidden="true"></i>
+                        <span class="social-tooltip">Facebook</span>
+                    </a>
+
+                    <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer"
+                        class="home__social-link twitter focus-visible will-change-transform"
+                        aria-label="زيارة ملفي الشخصي على Twitter">
+                        <i class='bx bxl-twitter' aria-hidden="true"></i>
+                        <span class="social-tooltip">Twitter</span>
+                    </a>
+
+                    <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer"
+                        class="home__social-link instagram focus-visible will-change-transform"
+                        aria-label="زيارة ملفي الشخصي على Instagram">
+                        <i class='bx bxl-instagram' aria-hidden="true"></i>
+                        <span class="social-tooltip">Instagram</span>
+                    </a>
+                </div>
+
+               
             </div>
 
         </section>
- <!--=============== TESTIMONIALS ===============-->
-         <section class="testimonials section" id="testimonials">
-        <div class="testimonials__container">
-            <div class="section__header">
-                <span class="section__subtitle">ما يقوله عملاؤنا</span>
-                <h2 class="section__title">شهادات العملاء</h2>
-                <p class="section__description">آراء وتجارب عملائنا الكرام معنا</p>
-            </div>
-            
+        <!--=============== TESTIMONIALS ===============-->
+        <section class="testimonials section" id="testimonials">
+            <div class="testimonials__container">
+                <div class="section__header">
+                    <span class="section__subtitle">ما يقوله عملاؤنا</span>
+                    <h2 class="section__title">شهادات العملاء</h2>
+                    <p class="section__description">آراء وتجارب عملائنا الكرام معنا</p>
+                </div>
+
                 <div class="testimonials__track" id="testimonialsTrack">
                     <!-- سيتم إدراج الكروت هنا ديناميكياً -->
                 </div>
-                
-              
-                
+
+
+
                 <div class="testimonials__indicators" id="testimonialsIndicators">
                     <!-- سيتم إدراج المؤشرات هنا ديناميكياً -->
                 </div>
-        </div>
-    </section>
+            </div>
+        </section>
     </main>
     <!--=============== MIXITUP FILTER ===============-->
     <script src=""></script>
@@ -156,5 +180,3 @@
 </body>
 
 </html>
-
-
